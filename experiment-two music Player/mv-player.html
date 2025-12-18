@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MV Player</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            max-width: 1200px;
+        }
+    </style>
+</head>
+<body>
+    <video id="mv-video" controls autoplay muted></video>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var video = document.getElementById('mv-video');
+            var musicId = sessionStorage.getItem('musicId');
+            if (musicId !== null) {
+                video.src = `mp4/video${musicId}.mp4`;
+                video.muted = true;
+                video.play().catch(function(error) {
+                    console.log('自动播放失败，可能需要用户交互');
+                });
+            } else {
+                console.error('musicId未找到。请检查sessionStorage中是否存在该值。');
+                video.src = ''; // 设置默认MV路径或不设置
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Player</title>
+    <link rel="stylesheet" href="./CSS/audio.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- 背景图片容器 -->
+    <div class="background-container" id="background-container"></div>
+    <!-- 背景遮罩层 -->
+    <div class="background-overlay"></div>
+    <!-- 背景渐变层 -->
+    <div class="bg-gradient"></div>
+    <!-- 动态粒子背景 -->
+    <div class="particles-bg" id="particles-bg"></div>
+    
+    <!-- 主容器 -->
+    <div class="main-container">
+        <!-- 上半部分 -->
+        <div class="upper-container">
+            <!-- 唱片 -->
+            <div class="record-container">
+                <!-- 唱片光晕效果 -->
+                <div class="record-glow"></div>
+                <!-- 黑胶唱片背景 -->
+                <div class="record-bg">
+                    <div class="rotate-play" id="record-img">
+                        <div class="record-center"></div>
+                    </div>
+                </div>
+                <!-- 唱片臂（播放时出现） -->
+                <div class="record-arm" id="record-arm">
+                    <div class="arm-base"></div>
+                    <div class="arm-rod"></div>
+                    <div class="arm-head"></div>
+                </div>
+            </div>
+
+            <!-- 歌曲信息 -->
+            <div class="introduction-container">
+                <div class="text-container">
+                    <div class="music-title" id="music-title">
+                     <span class="title-content" data-text="">音乐1</span>
+                    </div>
+                    <div class="author-container">
+                        作者：
+                        <span id="author-name">歌手名</span>
+                    </div>
+                    <div class="album-info">
+                        <span class="album-label">专辑：</span>
+                        <span class="album-name" id="album-name">未命名专辑</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+        <!-- 下半部分 -->
+        <div class="audio-box">
+            <div class="audio-container">
+                <audio id="audio"></audio>
+                <!-- 进度条 -->
+                <div class="a-progress">
+                    <div class="pgs-total" id="progress-bar">
+                        <div class="pgs-play" style="width: 0%"></div>
+                        <div class="progress-dot" id="progress-dot"></div>
+                    </div>
+                    <div class="progress-time">
+                        <span class="played-time">00:00</span>
+                        <span class="audio-time">00:00</span>
+                    </div>
+                </div>
+                <!-- 下排控制按钮 -->
+                <div class="a-controls">
+                    <!-- 播放时间 -->
+                    <div class="time-container mobile-only">
+                        <span class="played-time">00:00</span>
+                        &nbsp;/&nbsp;
+                        <span class="audio-time">00:00</span>
+                    </div>
+                    <!-- 下排中间按钮 -->
+                    <div class="center-button-container">
+                        <!-- 播放模式 -->
+                        <div class="center-icon mode" id="mode-btn" title="播放模式">
+                            <i class="fas fa-repeat"></i>
+                        </div>
+                        <!-- 上一首 -->
+                        <div class="center-icon s-left" id="prev-btn" title="上一首">
+                            <i class="fas fa-step-backward"></i>
+                        </div>
+                        <!-- 播放/暂停 -->
+                        <div class="icon-play" id="play-btn" title="播放">
+                            <div class="play-inner">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="pulse-effect"></div>
+                        </div>
+                        <!-- 下一首 -->
+                        <div class="center-icon s-right" id="next-btn" title="下一首">
+                            <i class="fas fa-step-forward"></i>
+                        </div>
+                        <!-- 音量按钮 -->
+                        <div class="center-icon volumn" id="volume-btn" title="音量">
+                            <i class="fas fa-volume-up"></i>
+                        </div>
+                        <!-- 音量进度条 -->
+                        <div class="volume-slider-container" id="volume-container">
+                            <input id="volumn-togger" type="range" title="70%" name="change" min="0" max="100" step="1"
+                                value="70" />
+                            <div class="volume-value">70%</div>
+                        </div>
+                    </div>
+                    <!-- 右下角区域按钮 -->
+                    <div class="bottom-button-container">
+                        <!-- 列表 -->
+                        <div class="list button-icon" id="list-btn" title="播放列表">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <!-- 倍速 -->
+                        <div class="speed" id="speed-btn" title="播放速度">1.0x</div>
+                        <!-- MV播放按钮 -->
+                        <div class="MV button-icon" id="MV" title="播放MV">
+                            <i class="fas fa-film"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 音乐列表 -->
+    <div class="music-list" id="music-list">
+        <div class="music-list-container">
+            <!-- 列表头部 -->
+            <div class="music-list-header">
+                <div class="music-list-title">播放列表</div>
+                <div class="close-list-btn" id="close-list-btn">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <hr class="line" />
+            <!-- 歌曲列表容器 -->
+            <div class="all-list" id="song-list">
+                <div class="music-item active" data-id="0">
+                    <div class="music-number">01</div>
+                    <div class="music-info">
+                        <div class="music-name">耀斑</div>
+                        <div class="music-artist">HOYO-MiX & YMIR</div>
+                    </div>
+                    <div class="music-duration">3:45</div>
+                </div>
+                <div class="music-item" data-id="1">
+                    <div class="music-number">02</div>
+                    <div class="music-info">
+                        <div class="music-name">紅蓮華</div>
+                        <div class="music-artist">LiSA</div>
+                    </div>
+                    <div class="music-duration">3:57</div>
+                </div>
+                <div class="music-item" data-id="2">
+                    <div class="music-number">03</div>
+                    <div class="music-info">
+                        <div class="music-name">Wake Up, Get Up, Get Out There</div>
+                        <div class="music-artist">Lyn</div>
+                    </div>
+                    <div class="music-duration">4:12</div>
+                </div>
+                <div class="music-item" data-id="3">
+                    <div class="music-number">04</div>
+                    <div class="music-info">
+                        <div class="music-name">Untitled</div>
+                        <div class="music-artist">Unknown</div>
+                    </div>
+                    <div class="music-duration">2:33</div>
+                </div>
+            </div>
+            <!--列表底部 -->
+            <div class="list-footer">
+                <div class="total-songs">共 <span id="song-count">4</span> 首歌曲</div>
+                <div class="total-duration">总时长：<span id="total-duration">14:27</span></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="./JS/main.js"></script>
